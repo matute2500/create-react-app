@@ -11,7 +11,7 @@ function App() {
     setMensaje('Enviando...');
 
     try {
-      const res = await fetch('https://script.google.com/macros/s/TU_WEBHOOK_URL/exec', {
+      const res = await fetch('https://script.google.com/macros/s/AKfycbzNCOyrRL8CLdZHSb-Y_DTZM0W5B_Lk81crPpqJPskzTc5-4BqsSZf0Uzf8I13awtp3bg/exec', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fecha, tipo }),
