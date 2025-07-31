@@ -11,24 +11,28 @@ function App() {
     setMensaje('Enviando...');
 
     try {
-      const res = await fetch('https://script.google.com/macros/s/AKfycbxme7Pq7lzwdGZFXchc1R-84AHYsm2cIcbO-U8y1JE2nC5Ar8oSio4tUEKMKsjBn9eU8g/exec', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fecha, tipo }),
-      });
-
-      if (res.ok) {
-        setMensaje('✅ Datos enviados correctamente');
-        setFecha('');
-        setTipo('');
-      } else {
-        setMensaje('❌ Error al enviar los datos');
-      }
-    } catch (error) {
-      console.error(error);
-      setMensaje('❌ Error de red o servidor');
-    }
-  };
+      const res = await fetch('https://script.google.com/macros/s/TU_ID/exec', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    fecha,
+    tipo
+  })
+})
+.then(response => response.json())
+.then(data => {
+  if (data.status === 'ok') {
+    alert('✅ Datos guardados con éxito');
+  } else {
+    alert('❌ Error en el servidor: ' + data.mensaje);
+  }
+})
+.catch(error => {
+  console.error('Error de red:', error);
+  alert('❌ Error de red o servidor');
+});
 
   return (
     <div className="container">
