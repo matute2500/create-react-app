@@ -11,7 +11,7 @@ function App() {
     setMensaje('Enviando...');
 
     try {
-      const res = await fetch('https://script.google.com/macros/s/AKfycbyKzZ5637fposQKjpUfOqTYQAc_gdu-KPAz8KOmy-Ezdb0O5MA90QIyBx0nrhj6TZvyzA/exec', {
+      const res = await fetch('https://script.google.com/macros/s/AKfycbxme7Pq7lzwdGZFXchc1R-84AHYsm2cIcbO-U8y1JE2nC5Ar8oSio4tUEKMKsjBn9eU8g/exec', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fecha, tipo }),
