@@ -1,25 +1,61 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [fecha, setFecha] = useState('');
+  const [tipo, setTipo] = useState('');
+  const [mensaje, setMensaje] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMensaje('Enviando...');
+
+    try {
+      const res = await fetch('https://script.google.com/macros/s/TU_WEBHOOK_URL/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fecha, tipo }),
+      });
+
+      if (res.ok) {
+        setMensaje('✅ Datos enviados correctamente');
+        setFecha('');
+        setTipo('');
+      } else {
+        setMensaje('❌ Error al enviar los datos');
+      }
+    } catch (error) {
+      console.error(error);
+      setMensaje('❌ Error de red o servidor');
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h2>Formulario de Partido</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Fecha:</label>
+        <input
+          type="date"
+          value={fecha}
+          onChange={(e) => setFecha(e.target.value)}
+          required
+        />
+
+        <label>Tipo de Partido:</label>
+        <select value={tipo} onChange={(e) => setTipo(e.target.value)} required>
+          <option value="">-- Selecciona una opción --</option>
+          <option value="LIGA">LIGA</option>
+          <option value="AMISTOSO">AMISTOSO</option>
+          <option value="CAMPEONATO">CAMPEONATO</option>
+        </select>
+
+        <button type="submit">Enviar</button>
+      </form>
+      {mensaje && <p className="mensaje">{mensaje}</p>}
     </div>
   );
 }
 
 export default App;
+
